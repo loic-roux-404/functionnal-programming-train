@@ -8,6 +8,12 @@
 asdf install
 ```
 
-## Run
+## Math lib
 
-`deno run lib_test.ts`
+`deno test libTest.ts`
+
+## Io part
+
+```bash
+deno run --allow-read --allow-write io/tp.ts
+```
