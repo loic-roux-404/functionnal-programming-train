@@ -1,5 +1,5 @@
-import { assertEquals } from "https://deno.land/std@0.170.0/testing/asserts.ts";
-import { pgcd, isDivisibleBy } from "./math/lib.ts"
+import { assertEquals } from "https://deno.land/std@0.170.0/testing/asserts.ts"
+import { pgcd, isDivisibleBy } from "./index.ts"
 
 Deno.test("Divide test 2", () => {
   assertEquals(isDivisibleBy(7, 2), false);
@@ -36,8 +36,27 @@ Deno.test("Divide test 8", () => {
   assertEquals(isDivisibleBy(442, 8), false);
   assertEquals(isDivisibleBy(21, 8), false);
   assertEquals(isDivisibleBy(80, 8), true);
-  assertEquals(isDivisibleBy(444, 8), true);
-  assertEquals(isDivisibleBy(6908, 8), true);
+  assertEquals(isDivisibleBy(444, 8), false);
+  assertEquals(isDivisibleBy(6908, 8), false);
+})
+
+Deno.test("Divide test 9", () => {
+  assertEquals(isDivisibleBy(90, 9), true);
+  assertEquals(isDivisibleBy(1246, 9), false);
+  assertEquals(isDivisibleBy(6908, 9), false);
+})
+
+Deno.test("Divide test 10", () => {
+  assertEquals(isDivisibleBy(10, 10), true);
+  assertEquals(isDivisibleBy(1300, 10), true);
+  assertEquals(isDivisibleBy(1210, 10), true);
+})
+
+Deno.test("Divide test 11", () => {
+  assertEquals(isDivisibleBy(10109, 11), true);
+  assertEquals(isDivisibleBy(110, 11), true);
+  assertEquals(isDivisibleBy(1_459_741_65, 11), false);
+  assertEquals(isDivisibleBy(1222, 11), false);
 })
 
 Deno.test("Pgcd test", () => {
