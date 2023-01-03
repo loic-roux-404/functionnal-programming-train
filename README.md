@@ -2,7 +2,9 @@
 
 ## Install
 
-- [asdf](https://asdf-vm.com/guide/getting-started.html#_1-install-dependencies)
+- [install asdf](https://asdf-vm.com/guide/getting-started.html#_1-install-dependencies)
+
+And in project root run :
 
 ```bash
 asdf install
@@ -10,7 +12,7 @@ asdf install
 
 ## Math lib
 
-`deno test libTest.ts`
+`deno test math`
 
 ## Io part
 
