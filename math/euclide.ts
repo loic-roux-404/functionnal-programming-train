@@ -24,32 +24,59 @@ const ppcmFormulae = (pgcd: number, a: number, b: number) => (a * b) / pgcd;
 const ppcm = (nb: number, andNb: number): number =>
   ppcmFormulae(pgcd(nb, andNb), nb, andNb);
 
+const refactoriseByCount = (arr: number[][]) => arr
+    .sort(([_, x2], [__, y2]) => (x2 > y2 ? -1 : 1))
+    .map((item, pos, arr) => {
+      if (arr[pos - 1] == null) return item
+
+      const previous = arr[pos - 1][1] ?? null
+      
+      if (previous === item[1]) {
+        arr[pos - 1][0] += item[0]
+        return null
+      }
+
+      return item
+    })
+    .filter(item => item != null) as number[][]
+
+const bachetStep = ([v, a, u]: number[], [m1, q1, m2, q2]: number[]) => {
+  const exp0 = [v, a];
+  const exp1 = [u * m1, q1];
+  const exp2 = [u * m2, q2];
+
+  return refactoriseByCount([exp0, exp1, exp2]).flat();
+}
+
 // a u + b v = a ^ b
-const bachetBezoud = (a: number, b: number): [number, number] => {
-  const [_, details] = pgcdWithDetail(a, b);
+const bachet = (a: number, b: number): [number, number] => {
+  const [p, details] = pgcdWithDetail(a, b);
   const additionSide = details
     .filter(([_, b]) => b !== 0)
-    .map(([a, b]) => [a, Math.floor(a / b), b, a % b]);
-
-  const soustractionSide = additionSide
+    .map(([a, b]) => [a, Math.floor(a / b), b, a % b])
     .filter(([_, __, ___, r]) => r !== 0)
-    .map(([a, q, d, r]) => [r, a, q, d])
+
+  console.info(`a = ${a}, b = ${b}, p = ${p}`)
+  
+  const soustractionSide = additionSide
+    .map(([a, u, b, _]) => [1, a, -u, b])
     .reverse();
 
-  console.log(additionSide, soustractionSide);
+  let i = 0
+  let res = soustractionSide[0];
 
-  const result = soustractionSide
-    .map(([_, a, q, __], index) => {
-      const next = soustractionSide[index + 1] ?? []
-      if (next.length === 0) return []
+  while (!(res.includes(a) && res.includes(b))) {
+    console.info(res, soustractionSide[i + 1])
+    res = bachetStep(res, soustractionSide[i + 1])
 
-      return [[a, q], [next[1], next[2], next[3]]];
-    })
-    .filter(arr => arr.length > 0)
+    i++;
+  }
 
-  console.log(result);
+  console.info(res)
+  
+  const [u, _, v, __] = res;
 
-  return [0, 0];
-};
+  return [u, v];
+}
 
-export { pgcd, ppcm, bachetBezoud };
+export { pgcd, ppcm, bachet };
