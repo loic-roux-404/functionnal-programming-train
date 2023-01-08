@@ -19,3 +19,7 @@ asdf install
 ```bash
 deno run --allow-read --allow-write io/tp.ts
 ```
+
+### Divers
+
+- [Signes maths à CC](https://caracteres-speciaux.net/symboles-mathematiques/)

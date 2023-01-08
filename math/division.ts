@@ -1,4 +1,3 @@
-import { assert } from "https://deno.land/std@0.170.0/testing/asserts.ts"
 
 const pairNbTest = (a: number, toValidateNbs: number[]): boolean => 
   toValidateNbs.includes(Number(String(a).charAt(String(a).length - 1)))
