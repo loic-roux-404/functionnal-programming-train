@@ -83,6 +83,9 @@ const isDivisibleBy = (nb: number, by: number): boolean => {
   return fnMapping[by](nb)
 }
 
+// TODO : ak ≡ bk (n)
+// Pour calculer 247349 dans Z7, on commence par simplifier 247.
+
 export {
   isDivisibleBy
 };
