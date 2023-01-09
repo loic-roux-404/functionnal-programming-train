@@ -99,8 +99,7 @@ const bezoudIdInverse = ([a, u, b, v]: number[]) => [invZ(a, v), invZ(b, u)];
 
 // My1 ≡ 1 (m)
 const bruteForceInv = (mod: number, M: number) => {
-  const res = Array.from({ length: mod }, (_, k) => k)
-    .map((y) => y + 1)
+  const res = Array.from({ length: mod }, (_, k) => k + 1)
     .findLast((y) => (y * M) % mod === 1);
 
   if (res == null) throw new Error("No inverse found");
