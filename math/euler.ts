@@ -1,6 +1,4 @@
-
-// ∀n ∈ N*, 𝜑(n) le nombre d'élements de Zn*. 
-// C'est donc le nombre d'élements inversibles de Zn*.
+import Logger from '../logger/index.ts'
 
 const isPrime = (n: number): boolean => {
   if (n < 2) return false;
@@ -16,9 +14,10 @@ const isPrime = (n: number): boolean => {
   return true;
 }
 
+// ∀n ∈ N*, 𝜑(n) le nombre d'élements de Zn*. 
+// C'est donc le nombre d'élements inversibles de Zn*.
 const countInversible = (phi: number): number => {
   if (isPrime(phi)) return phi - 1
-
 
   const primeFactors = Array
     .from(
@@ -29,11 +28,11 @@ const countInversible = (phi: number): number => {
     )
     .filter((n) => n !== null) as number[]
 
-  return new String(phi)
-    .split("")
-    .map(Number)
-    .reduce((prev, curr, i) => 
-      prev * (curr / primeFactors[i]), phi
+  Logger.info(`euler indicator prime factors : ${primeFactors.join(", ")}`)
+
+  return primeFactors
+    .reduce((prev, curr) => 
+      prev * (curr - 1) / curr, phi
     )
 }
-export { isPrime, countInversible };
+export { isPrime, countInversible }

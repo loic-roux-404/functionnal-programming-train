@@ -1,7 +1,7 @@
 // Lemme d'Euclide : soit un couple d'entiers naturels non nuls (a,b),
 // si des entiers naturels q et r, avec r ≠ 0,
 // sont tels que a = bq + r , alors : PGCD(a,b) = PGCD(b,r).
-import Logger from "../logger/index.ts";
+import Logger from "../logger/index.ts"
 
 const pgcdWithDetail = (nb: number, andNb: number): [number, number[][]] => {
   const vec = [...[nb > andNb ? nb : andNb], ...[andNb < nb ? andNb : nb]];

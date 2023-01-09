@@ -1,3 +1,4 @@
+import Logger from "../logger/index.ts";
 
 const pairNbTest = (a: number, toValidateNbs: number[]): boolean => 
   toValidateNbs.includes(Number(String(a).charAt(String(a).length - 1)))
@@ -21,10 +22,6 @@ const test4 = (a: number): boolean => pairNbTest(a, [0, 4, 8])
 const test5 = (a: number): boolean => pairNbTest(a, [5, 0])
 
 const test6 = (a: number): boolean => test2(a) && test3(a)
-
-const test7 = (_: number): boolean => {
-  throw new Error(`test 7 not implemented`)
-}
 
 const test8 = (a: number): boolean => (String(a).length >= 3 
     ? Number(String(a).slice(-3)) 
@@ -56,8 +53,6 @@ const test11 = (a: number): boolean => {
     .filter(nb => nb === 0 || nb % 2 === 0)
     .reduce((a, b) => a + b)
 
-    console.log(even, odd)
-
   return (even - odd) % 11 === 0
 }
 
@@ -68,7 +63,6 @@ const fnMapping: { [k: string]: (a: number) => boolean } = {
   4: test4,
   5: test5,
   6: test6,
-  7: test7,
   8: test8,
   9: test9,
   10: test10,
@@ -77,15 +71,38 @@ const fnMapping: { [k: string]: (a: number) => boolean } = {
 
 const isDivisibleBy = (nb: number, by: number): boolean => {
   if (Object.keys(fnMapping).filter((e: string) => Number(e) === by).length <= 0) {
-    throw new Error(`The number ${by} is not supported`)
+    Logger.warning(`The number ${by} is not supported by optimised functions`)
+    return nb % by === 0
   }
 
-  return fnMapping[by](nb)
+  const res = fnMapping[by](nb)
+
+  Logger.info(`${nb} in Z${by} is ${res}`)
+
+  return res
 }
 
-// TODO : ak ≡ bk (n)
-// Pour calculer 247349 dans Z7, on commence par simplifier 247.
+// ak ≡ bk (n)
+// successive power method (brute force)
+const modularExponentiation = (a: number, k: number, n: number): number => {
+  const b = a % n
+
+  Logger.info(`b = ${b}`)
+
+  let lightK = 0
+
+  while (b ** lightK <= n || (b ** lightK) % n !== 1 || lightK < k) {
+    lightK++
+  }
+
+  Logger.info(`${a}^${k} congrue à b = ${b}^${k}`)
+
+  if (isDivisibleBy(b, lightK)) return 0
+
+  return b
+}
 
 export {
-  isDivisibleBy
+  isDivisibleBy,
+  modularExponentiation
 };

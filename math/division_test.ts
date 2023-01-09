@@ -1,5 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.170.0/testing/asserts.ts"
-import { pgcd, isDivisibleBy } from "./index.ts"
+import { modExpo } from "./division.ts";
+import { isDivisibleBy } from "./index.ts"
 
 Deno.test("Divide test 2", () => {
   assertEquals(isDivisibleBy(7, 2), false);
@@ -59,6 +60,7 @@ Deno.test("Divide test 11", () => {
   assertEquals(isDivisibleBy(1222, 11), false);
 })
 
-Deno.test("Pgcd test", () => {
-  assertEquals(pgcd(1, 2), 1);
+Deno.test("Exponentation greedy", () => {
+  assertEquals(modExpo(247, 349, 7), 2)
+  assertEquals(modExpo(4_813_986_705_432, 15, 11), 3)
 })
