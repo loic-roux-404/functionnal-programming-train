@@ -95,7 +95,7 @@ const modularExponentiation = (a: number, k: number, n: number): number => {
     lightK++
   }
 
-  Logger.info(`${a}^${k} congrue à b = ${b}^${k}`)
+  Logger.info(`${a}^${k} congrue à b = ${b}^${k} on ${lightK}`)
 
   if (isDivisibleBy(b, lightK)) return 0
 

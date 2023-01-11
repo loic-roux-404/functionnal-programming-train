@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.170.0/testing/asserts.ts"
-import { modExpo } from "./division.ts";
+import { modularExponentiation } from "./division.ts";
 import { isDivisibleBy } from "./index.ts"
 
 Deno.test("Divide test 2", () => {
@@ -61,6 +61,6 @@ Deno.test("Divide test 11", () => {
 })
 
 Deno.test("Exponentation greedy", () => {
-  assertEquals(modExpo(247, 349, 7), 2)
-  assertEquals(modExpo(4_813_986_705_432, 15, 11), 3)
+  assertEquals(modularExponentiation(247, 349, 7), 2)
+  assertEquals(modularExponentiation(4_813_986_705_432, 15, 11), 3)
 })
