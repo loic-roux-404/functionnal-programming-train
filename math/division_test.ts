@@ -61,6 +61,6 @@ Deno.test("Divide test 11", () => {
 })
 
 Deno.test("Exponentation greedy", () => {
-  assertEquals(modularExponentiation(247, 349, 7), 2)
-  assertEquals(modularExponentiation(4_813_986_705_432, 15, 11), 3)
+  assertEquals(modularExponentiation(247, 7, 349), 2)
+  assertEquals(modularExponentiation(4_813_986_705_432, 11, 15), 3)
 })

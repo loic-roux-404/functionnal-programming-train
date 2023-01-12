@@ -148,6 +148,7 @@ const chineseRemainderMulti = (systems: { a: number; m: number }[]) => {
 export {
   pgcd,
   ppcm,
+  invZ,
   extendedWithBachetBezoud,
   bezoudId,
   bezoudIdInverse,

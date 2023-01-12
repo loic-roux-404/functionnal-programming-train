@@ -84,7 +84,7 @@ const isDivisibleBy = (nb: number, by: number): boolean => {
 
 // ak ≡ bk (n)
 // successive power method (brute force)
-const modularExponentiation = (a: number, k: number, n: number): number => {
+const modularExponentiation = (a: number, n: number, k: number): number => {
   const b = a % n
 
   Logger.info(`b = ${b}`)
@@ -92,6 +92,7 @@ const modularExponentiation = (a: number, k: number, n: number): number => {
   let lightK = 0
 
   while (b ** lightK <= n || (b ** lightK) % n !== 1 || lightK < k) {
+    console.log(b ** lightK)
     lightK++
   }
 
