@@ -6,20 +6,28 @@
 
 And in project root run :
 
-```bash
+```shell
 asdf install
 ```
 
 ## Math lib
 
-`deno test math`
+```shell
+deno test math
+```
+
+## Crypto part
+
+```shell
+deno test crypto
+```
 
 ## Io part
 
-```bash
+```shell
 deno run --allow-read --allow-write io/tp.ts
 ```
 
 ### Divers
 
-- [Signes maths à CC](https://caracteres-speciaux.net/symboles-mathematiques/)
+- [Formalisme maths à CC](https://caracteres-speciaux.net/symboles-mathematiques/)
