@@ -16,6 +16,17 @@ const isPrime = (n: number): boolean => {
 
 const isPrimeOf = (nb: number, of: number): boolean => pgcd(nb, of) === 1
 
+const getPrimeFactors = (n: number) => {
+  let firstDiv = Math.floor(Math.sqrt(n))
+  while (n % firstDiv !== 0) {
+      firstDiv--
+  }
+
+  const secondDiv = Math.floor(n / firstDiv)
+
+  return [firstDiv, secondDiv]
+}
+
 /**
  * print matrix with multiplication table in finihed universe
  * @param nb number to process
@@ -25,4 +36,4 @@ const universeZOfMul = (x: number) =>
     Array.from({ length: x - 1 }, (_, j) => ((i + 1) * (j + 1)) % x)
   );
 
-export { isPrimeOf, universeZOfMul, isPrime }
+export { isPrimeOf, universeZOfMul, isPrime, getPrimeFactors }

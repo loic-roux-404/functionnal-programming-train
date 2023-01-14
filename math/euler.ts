@@ -1,6 +1,8 @@
 import Logger from '../logger/index.ts'
 import { isPrime } from '../math/numbers.ts'
 
+const getPhi = ([p, q]: number[]): number => (p - 1) * (q - 1)
+
 // ∀n ∈ N*, 𝜑(n) le nombre d'élements de Zn*. 
 // C'est donc le nombre d'élements inversibles de Zn*.
 const countInversible = (phi: number): number => {
@@ -22,4 +24,4 @@ const countInversible = (phi: number): number => {
       prev * (curr - 1) / curr, phi
     )
 }
-export { isPrime, countInversible }
+export { isPrime, countInversible, getPhi }

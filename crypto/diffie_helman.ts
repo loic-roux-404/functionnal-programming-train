@@ -14,8 +14,8 @@ const matchPrivKey = ([a, b]: number[], [p, g]: number[]): boolean => {
   const pubA = getKeyPair(a, [p, g]);
   const pubB = getKeyPair(b, [p, g]);
 
-  const Ka = modularExponentiation(pubB ** a, p, a)
-  const Kb = modularExponentiation(pubA ** b, p, b)
+  const Ka = modularExponentiation(pubB, p, a)
+  const Kb = modularExponentiation(pubA, p, b)
 
   Logger.info(`kA : ${pubA} / KB : ${pubB}`)
 
