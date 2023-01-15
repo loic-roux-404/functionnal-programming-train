@@ -172,6 +172,8 @@ function tpReadInfos(data: string) {
   console.log("\nfirstAndLastUpper :\n" + firstAndLastUpper);
 }
 
+// TODO : this test should go in a test file and other code should
+// be modularized
 function tpWriteFile() {
   const newLine = new NewLine("Bonjour TEST nouvelle ligne");
   newLine.addTextToLine(" encore du texte sur la nouvelle ligne");

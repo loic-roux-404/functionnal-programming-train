@@ -82,20 +82,26 @@ const isDivisibleBy = (nb: number, by: number): boolean => {
   return res
 }
 
-// ak ≡ bk (n)
-// successive power method (brute force)
-const modularExponentiation = (b: number, m: number, e: number, pow = 1): number => {
-  let r = 1
-  if (1 & e) {
-      r = b
-  }
-  while (e) {
-      e >>= 1
-      b = (b * b) % m
-      if (e & 1) r = (r * b) % m
+// a^k ≡ b^k (n)
+const modularExponentiation = (b: number, m: number, e: number): number => {
+  if (m === 1) return 0
+  
+  if (e < 0)
+    return -1
+
+  b = b % m
+  let result = 1
+  Logger.info(`${b}^${e}[${m}], gives: ${result}`)
+
+  while (e > 0) {
+    if (e % 2 === 1)
+      result = (result * b) % m
+    e = Math.floor(e / 2)
+    b = (b * b) % m
+    Logger.info(`${b}^${e}[${m}], gives: ${result}`)
   }
 
-  return r
+  return result
 }
 
 export {
