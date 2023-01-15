@@ -13,5 +13,3 @@ Deno.test("Rsa system encrypt", () => {
 Deno.test("Rsa system decrypt", () => {
   assertEquals(decrypt(872, [2773, 17]), 66);
 })
-
-// assertEquals(decrypt([8, 12], system, 13), 42)
