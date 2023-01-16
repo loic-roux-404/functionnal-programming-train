@@ -86,91 +86,61 @@ async function printFile(file: string) {
   }
 }
 
-async function readFile(file: string, callback: (data: string) => void) {
+async function readFile(file: string) {
   try {
     const data = await Deno.readTextFile(file);
 
-    if (data == "") {
-      console.log("\n\nFile " + file + " is empty, no function called\n");
-      return;
+    if (!data) {
+      console.warn("\n\nFile " + file + " is empty, no function called\n");
+      return "";
     }
+    return data;
+  } catch (error) {
+    console.error(error);
+    return "";
+  }
+}
 
-    return callback(data);
+function setTextToLine(text: string, line: Line) {
+  return new Line(text);
+}
+
+function lowerCaseLine(line: Line) {
+  return new Line(noUpperCase(false, line.getText()));
+}
+
+function removeUpperCaseFromLine(line: Line) {
+  return new Line(noUpperCase(true, line.getText()));
+}
+
+function addTextToLine(text: string, line: Line) {
+  return new Line(line.getText() + text);
+}
+
+function firstAndLastLetterUpper(line:Line) {
+  return new Line(firstAndLastLetterUppercase(line.lineContent));
+}
+
+async function save(file: string, line: Line) {
+  try {
+    await Deno.writeTextFile(file, "\n"+line.getText(), { append: true });
+    console.log("Line saved !");
   } catch (error) {
     console.error(error);
   }
 }
 
-class NewLine {
-  public newLine?: string;
+class Line {
+  public readonly lineContent: string;
 
   constructor(lineValue?: string) {
-    this.newLine = lineValue ? lineValue : "";
+    this.lineContent = lineValue ? lineValue : "";
   }
 
   getText() {
-    return this.newLine;
-  }
-
-  setTextToLine(text: string) {
-    this.newLine = text;
-  }
-
-  addTextToLine(text: string) {
-    this.newLine += text;
-  }
-
-  toLowerCase() {
-    this.newLine = noUpperCase(false, this.newLine ?? "");
-  }
-
-  removeUpperCase() {
-    this.newLine = noUpperCase(true, this.newLine ?? "");
-  }
-
-  firstAndLastLetterUpper() {
-    this.newLine = firstAndLastLetterUppercase(this.newLine ?? "");
-  }
-
-  async save(file: string) {
-    try {
-
-      await Deno.writeTextFile(file, "\n" + this.newLine)
-      console.log("Line saved !");
-    } catch (error) {
-      console.error(error);
-    }
+    return this.lineContent;
   }
 }
 
-// function addLine(file, lineText){
-//    fs.appendFile(file, "\n"+lineText, function (err) {
-//       if (err) throw err;
-//       console.log('Line saved !');
-//    });
-// }
 
-function tpReadInfos(data: string) {
-  // console.log(data)
-  const charCountResult = countEachChar(data);
-  const sortedCharCount = sortByKey(charCountResult);
-  const noUpperCaseData = noUpperCase(true, data);
-  const lowerCaseData = noUpperCase(false, data);
-  const startWithT = countWordStartWith("t", data);
-  const onProtoStartWith = data.countWordStartWith("t");
-  const word5char = countWordWithChars(5, data);
-  const onProtoWithNChars = data.countWordWithChars(5);
-  const firstAndLastUpper = firstAndLastLetterUppercase(data);
-
-  console.log("Compteur caractères : ", sortedCharCount);
-  console.log("Start with 't' : " + startWithT);
-  console.log("onProto start with 't' : " + onProtoStartWith);
-  console.log("Words with 5 letters : " + word5char);
-  console.log("onProto with 5 letters : " + onProtoWithNChars);
-  console.log("\nNo upperCase :\n" + noUpperCaseData);
-  console.log("\nlowercase :\n" + lowerCaseData);
-  console.log("\nfirstAndLastUpper :\n" + firstAndLastUpper);
-}
-
-
-export { printFile, readFile, tpReadInfos, NewLine };
+export { printFile, readFile, Line, firstAndLastLetterUppercase, countWordWithChars, countWordStartWith, countEachChar,noUpperCase, sortByKey, setTextToLine, lowerCaseLine, removeUpperCaseFromLine, addTextToLine, save, firstAndLastLetterUpper};
