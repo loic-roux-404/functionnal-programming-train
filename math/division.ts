@@ -56,7 +56,7 @@ const test11 = (a: number): boolean => {
   return (even - odd) % 11 === 0
 }
 
-const fnMapping: { [k: string]: (a: number) => boolean } = {
+const fnMapping: { [k: string]: (a: number) => boolean } = Object.freeze({
   1: test1,
   2: test2,
   3: test3,
@@ -67,7 +67,7 @@ const fnMapping: { [k: string]: (a: number) => boolean } = {
   9: test9,
   10: test10,
   11: test11
-}
+})
 
 const isDivisibleBy = (nb: number, by: number): boolean => {
   if (Object.keys(fnMapping).filter((e: string) => Number(e) === by).length <= 0) {

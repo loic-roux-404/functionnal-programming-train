@@ -3,14 +3,17 @@ import Logger from "../logger/index.ts";
 /**
  * create priv (mod exponentiation), return pub
  */
-const getKeyPair = (key: number, [p, g]: number[]): number => {
+const getKeyPair = (key: number, [p, g]: [number, number]): number => {
   const pub = Math.pow(g, key) % p
   Logger.info(`pub : ${pub}`);
 
   return pub;
 };
 
-const matchPrivKey = ([a, b]: number[], [p, g]: number[]): boolean => {
+const matchPrivKey = (
+  [a, b]: [number, number],
+  [p, g]: [number, number]
+): boolean => {
   const pubA = getKeyPair(a, [p, g]);
   const pubB = getKeyPair(b, [p, g]);
 

@@ -2,7 +2,9 @@ import { isPrimeOf, isPrime, modularExponentiation, getPrimeFactors, extendedWit
 import Logger from "../logger/index.ts"
 import { getPhi } from "../math/euler.ts"
 
-const createRsaSystem = ([p, q]: number[], e: number) => {
+const createRsaSystem = (
+  [p, q]: number[], e: number
+): readonly [number, number] => {
   if (!isPrime(p) || !isPrime(q)) {
     throw new Error("p and q must be prime")
   }

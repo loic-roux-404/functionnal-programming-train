@@ -7,7 +7,7 @@ import { extendedWithBachetBezoud, invZ } from "../math/euclide.ts";
  * c2 = mh^k
  * @returns [c1, c2] the encrypted message
  */
-const encrypt = ([p, g, h]: number[], k: number, m: number ) => {
+const encrypt = ([p, g, h]: number[], k: number, m: number): readonly [number, number] => {
   const c1 = g ** k
   Logger.info(`c1 = ${c1}`)
   const c2 = (m * h ** k) % p
@@ -27,7 +27,11 @@ const encrypt = ([p, g, h]: number[], k: number, m: number ) => {
 * and as diviion is impossible in Zp :
 * c2 * c1^(-s) = m
 */
-const decrypt = ([c1, c2]: number[], [p, g, h]: number[], s: number) => {
+const decrypt = (
+  [c1, c2]: number[], 
+  [p, g, h]: number[],
+  s: number
+) => {
   if (s > p) throw new Error("Invalid key")
   const checkH = g ** s % p
 
