@@ -22,10 +22,10 @@ deno test math
 deno test crypto
 ```
 
-## Io part
+## Io part (TP cour)
 
 ```shell
-deno run --allow-read --allow-write io/tp.ts
+deno test --allow-read --allow-write io/io_test.ts
 ```
 
 ### Divers

@@ -3,15 +3,15 @@
 // sont tels que a = bq + r , alors : PGCD(a,b) = PGCD(b,r).
 import Logger from "../logger/index.ts"
 
-const pgcdWithDetail = (nb: number, andNb: number): [number, number[][]] => {
-  const vec = [...[nb > andNb ? nb : andNb], ...[andNb < nb ? andNb : nb]];
-  const steps = [[...vec]];
+const pgcdWithDetail = (nb: number, andNb: number): readonly [number, readonly number[][]] => {
+  let vec = [
+    (nb > andNb ? nb : andNb), (andNb < nb ? andNb : nb)
+  ] as readonly [number, number];
+  let steps = [[...vec]] as readonly [number, number][];
 
   while (vec[1] !== 0) {
-    const r = vec[0] % vec[1];
-    vec[0] = vec[1];
-    vec[1] = r;
-    steps.push([...vec]);
+    vec = [vec[1], vec[0] % vec[1]];
+    steps = [...steps, [...vec]];
   }
 
   return [vec[0], steps];
@@ -40,18 +40,21 @@ const refactoriseByCount = (arr: number[][]) =>
 
       return item;
     })
-    .filter((item) => item != null) as number[][];
+    .filter((item) => item != null) as readonly number[][];
 
-const extendedStep = ([v, a, u]: number[], [m1, q1, m2, q2]: number[]) => {
+const extendedStep = (
+  [v, a, u]: number[],
+  [m1, q1, m2, q2]: number[]
+): readonly number[] => {
   const exp0 = [v, a];
   const exp1 = [u * m1, q1];
   const exp2 = [u * m2, q2];
 
-  return refactoriseByCount([exp0, exp1, exp2]).flat();
+  return [...refactoriseByCount([exp0, exp1, exp2])].flat();
 };
 
 // a u + b v = a ^ b
-const extendedWithBachetBezoud = (a: number, b: number): [number, number] => {
+const extendedWithBachetBezoud = (a: number, b: number): readonly [number, number] => {
   const [p, details] = pgcdWithDetail(a, b);
   const equationDownSide = details
     .filter(([_, b]) => b !== 0)
@@ -69,7 +72,7 @@ const extendedWithBachetBezoud = (a: number, b: number): [number, number] => {
 
   while (!(res.includes(a) && res.includes(b))) {
     Logger.info(res, equationUpSide[i + 1]);
-    res = extendedStep(res, equationUpSide[i + 1]);
+    res = [...extendedStep(res, equationUpSide[i + 1])];
 
     i++;
   }
@@ -81,7 +84,7 @@ const extendedWithBachetBezoud = (a: number, b: number): [number, number] => {
   return [u, v];
 };
 
-const bezoudId = (pgcd: number, [a, u, b, v]: number[]) => {
+const bezoudId = (pgcd: number, [a, u, b, v]: number[]): readonly number[] => {
   const inverseA = a / pgcd;
   const inverseB = b / pgcd;
 
@@ -123,7 +126,7 @@ const chineseRemainder = (
   p: number,
   b: number,
   q: number
-): number[] => {
+): readonly number[] => {
   const [u, v] = extendedWithBachetBezoud(p, q);
   const mod = p * q;
 
@@ -133,7 +136,9 @@ const chineseRemainder = (
 }
 
 // x ≡ a1 M1 y1 + a2 M2 y2 + ... + an+1 Mn+1 yn+1
-const chineseRemainderMulti = (systems: { a: number; m: number }[]) => {
+const chineseRemainderMulti = (
+  systems: { a: number; m: number }[]
+): readonly [number, number] => {
   const mod = systems.reduce((acc, { m }) => acc * m, 1);
   const shift =
     systems
