@@ -89,16 +89,17 @@ const modularExponentiation = (b: number, m: number, e: number): number => {
   if (e < 0)
     return -1
 
-  b = b % m
+  let bModM = b % m
   let result = 1
-  Logger.info(`${b}^${e}[${m}], gives: ${result}`)
+  let resE = e
+  Logger.info(`${bModM}^${e}[${m}], gives: ${result}`)
 
-  while (e > 0) {
-    if (e % 2 === 1)
-      result = (result * b) % m
-    e = Math.floor(e / 2)
-    b = (b * b) % m
-    Logger.info(`${b}^${e}[${m}], gives: ${result}`)
+  while (resE > 0) {
+    if (resE % 2 === 1)
+      result = (result * bModM) % m
+    resE = Math.floor(resE / 2)
+    bModM = (bModM * bModM) % m
+    Logger.info(`${b}^${resE}[${m}], gives: ${result}`)
   }
 
   return result
