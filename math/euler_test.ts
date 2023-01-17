@@ -4,4 +4,6 @@ import { countInversible } from "./euler.ts";
 Deno.test("Indicatrice d'euler", () => {
   assertEquals(countInversible(126), 36)
   assertEquals(countInversible(1200), 320)
+  assertEquals(countInversible(784), 336)
 });
+  

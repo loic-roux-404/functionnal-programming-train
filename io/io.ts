@@ -1,3 +1,5 @@
+import Logger from '../logger/index.ts'
+
 declare global {
   interface String {
     countWordStartWith(letter: string) : number;
@@ -80,7 +82,7 @@ function firstAndLastLetterUppercase(str: string) {
 async function printFile(file: string) {
   try {
     const data = await Deno.readTextFile(file);
-    console.log(data);
+    Logger.info(data);
   } catch (error) {
     console.error(error);
   }
