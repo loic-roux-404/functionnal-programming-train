@@ -43,8 +43,8 @@ const refactoriseByCount = (arr: number[][]) =>
     .filter((item) => item != null) as readonly number[][];
 
 const extendedStep = (
-  [v, a, u]: number[],
-  [m1, q1, m2, q2]: number[]
+  [v, a, u]: readonly number[],
+  [m1, q1, m2, q2]: readonly number[]
 ): readonly number[] => {
   const exp0 = [v, a];
   const exp1 = [u * m1, q1];
@@ -56,19 +56,19 @@ const extendedStep = (
 // a u + b v = a ^ b
 const extendedWithBachetBezoud = (a: number, b: number): readonly [number, number] => {
   const [p, details] = pgcdWithDetail(a, b);
-  const equationDownSide = details
+  const equationDownSide: readonly number[][] = details
     .filter(([_, b]) => b !== 0)
     .map(([a, b]) => [a, Math.floor(a / b), b, a % b])
     .filter(([_, __, ___, r]) => r !== 0);
 
   Logger.info(`a = ${a}, b = ${b}, p = ${p}`);
 
-  const equationUpSide = equationDownSide
+  const equationUpSide: readonly number[][] = equationDownSide
     .map(([a, u, b, _]) => [1, a, -u, b])
     .reverse();
 
   let i = 0;
-  let res = equationUpSide[0];
+  let res: readonly number[] = equationUpSide[0];
 
   while (!(res.includes(a) && res.includes(b))) {
     Logger.info(res, equationUpSide[i + 1]);
