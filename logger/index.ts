@@ -8,7 +8,7 @@ let myLogger = new Logger("Default" || "Default Logger", "INFO", {
   handlers: [new ConsoleHandler("INFO")],
 });
 
-const setLogger = (level?: LevelName, name?: string) => {
+const setLogger = (level: LevelName, name?: string) => {
   const finalLevel = level || "INFO";
 
   myLogger = new Logger(name || "Default Logger", finalLevel, {

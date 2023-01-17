@@ -1,4 +1,4 @@
-import Logger from '../logger/index.ts'
+import Logger, { setLogger } from '../logger/index.ts'
 
 declare global {
   interface String {
@@ -7,13 +7,15 @@ declare global {
   }
 }
 
+setLogger("ERROR", "io");
+
 /* ARRAY RELATED OPERATIONS */
 function sortByKey(arr: {[n: string]: any}) {
   const sorted: {[n: string]: any} = {};
 
   Object.keys(arr)
     .sort()
-    .forEach(function (v, i) {
+    .forEach(function (v, _) {
       sorted[v] = arr[v];
     });
   return sorted;
@@ -84,7 +86,7 @@ async function printFile(file: string) {
     const data = await Deno.readTextFile(file);
     Logger.info(data);
   } catch (error) {
-    console.error(error);
+    Logger.error(error);
   }
 }
 
@@ -93,56 +95,56 @@ async function readFile(file: string) {
     const data = await Deno.readTextFile(file);
 
     if (!data) {
-      console.warn("\n\nFile " + file + " is empty, no function called\n");
+      Logger.warning("\n\nFile " + file + " is empty, no function called\n");
       return "";
     }
     return data;
   } catch (error) {
-    console.error(error);
+    Logger.error(error);
     return "";
   }
 }
 
-function setTextToLine(text: string, line: Line) {
+function createLine(text: string) {
   return new Line(text);
 }
 
 function lowerCaseLine(line: Line) {
-  return new Line(noUpperCase(false, line.getText()));
+  return new Line(noUpperCase(false, line.getLineContent()));
 }
 
 function removeUpperCaseFromLine(line: Line) {
-  return new Line(noUpperCase(true, line.getText()));
+  return new Line(noUpperCase(true, line.getLineContent()));
 }
 
 function addTextToLine(text: string, line: Line) {
-  return new Line(line.getText() + text);
+  return new Line(line.getLineContent() + text);
 }
 
 function firstAndLastLetterUpper(line:Line) {
-  return new Line(firstAndLastLetterUppercase(line.lineContent));
+  return new Line(firstAndLastLetterUppercase(line.getLineContent()));
 }
 
 async function save(file: string, line: Line) {
   try {
-    await Deno.writeTextFile(file, "\n"+line.getText(), { append: true });
-    console.log("Line saved !");
+    await Deno.writeTextFile(file, "\n"+line.getLineContent(), { append: true });
+    Logger.info("Line saved !");
   } catch (error) {
-    console.error(error);
+    Logger.error(error);
   }
 }
 
 class Line {
-  public readonly lineContent: string;
+  protected readonly lineContent: string;
 
   constructor(lineValue?: string) {
     this.lineContent = lineValue ? lineValue : "";
   }
 
-  getText() {
+  getLineContent() {
     return this.lineContent;
   }
 }
 
 
-export { printFile, readFile, Line, firstAndLastLetterUppercase, countWordWithChars, countWordStartWith, countEachChar,noUpperCase, sortByKey, setTextToLine, lowerCaseLine, removeUpperCaseFromLine, addTextToLine, save, firstAndLastLetterUpper};
+export { printFile, readFile, Line, firstAndLastLetterUppercase, countWordWithChars, countWordStartWith, countEachChar,noUpperCase, sortByKey, createLine, lowerCaseLine, removeUpperCaseFromLine, addTextToLine, save, firstAndLastLetterUpper};
