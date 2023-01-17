@@ -78,4 +78,7 @@ Deno.test('First and last letter uppercase', async ()=> {
   console.log(result)
 })
 
+const clean = () =>
+  Deno.removeSync("./io/texte.txt")
 
+globalThis.addEventListener("unload", clean);
