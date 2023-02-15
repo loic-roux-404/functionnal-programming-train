@@ -19,6 +19,7 @@ Deno.test("ppcm", () => {
 Deno.test("bachet", () => {
   assertEquals(extendedWithBachetBezoud(1800, 1296), [-5, 7]);
   assertEquals(extendedWithBachetBezoud(1740, 23), [-3, 227]);
+  assertEquals(extendedWithBachetBezoud(120, 7), [1, -17]);
 });
 
 Deno.test("bezoud identity", () => {
