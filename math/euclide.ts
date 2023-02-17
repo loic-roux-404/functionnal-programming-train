@@ -135,15 +135,23 @@ const chineseRemainder = (
   return [invZ(mod, shift), mod];
 }
 
+function logAndReturn<T>(a: T) {
+  Logger.info(a as string);
+  return a;
+}
+
 // x ≡ a1 M1 y1 + a2 M2 y2 + ... + an+1 Mn+1 yn+1
 const chineseRemainderMulti = (
   systems: { a: number; m: number }[]
 ): readonly [number, number] => {
   const mod = systems.reduce((acc, { m }) => acc * m, 1);
+  Logger.info(`M: ${mod}`)
   const shift =
     systems
       .map(({ a, m }) => [invZ(m, a), m, mod / m])
+      .map(logAndReturn)
       .map(([a, m, M]) => [a, m, M, bruteForceInv(m, M)])
+      .map(logAndReturn)
       .map(([a, _, M, y]) => a * M * y)
       .reduce((prev, curr) => prev + curr) % mod;
 
